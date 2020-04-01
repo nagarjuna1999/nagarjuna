@@ -1,0 +1,70 @@
+f=false // variable representing whether shop is full or not 
+l=0    //Variable for representing availability of left shopper initially it is zero means there are no left shopper
+r=0
+/*Functions for left shopper*/
+
+EnterShop(left){
+   if(f){        // checks if shop is full then it will keep them waiting
+      wait(l);
+   }
+   if(!r){      //checks if right shopper is not available then it will keep them waiting
+      // waits for right shopper
+      rightwait(r);
+   }
+   ShopForAWhile();
+   LeaveShop(l);   // Calls leaveshop for left to leave the shop and decrements variable l
+   LeaveShop(r);   // Calls leaveshop for right to leave the shop and decrements variable r
+   
+}
+
+wait(left){
+    if(left!=0){
+      // busy waiting
+    }
+    left+=1;
+    return l;
+}
+
+LeaveShop(l){
+   l--;       //decrements the count of shoppers
+   return l;  //returns the updated count of shoppers
+}
+
+
+/*Functions for right shopper*/
+EnterShop(Right){
+   if(f){        // checks if shop is full then it will keep them waiting
+      wait(l);
+   }
+   if(!l){      //checks if left shopper is not available then it will keep them waiting
+      // waits for right shopper
+      leftwait(l);
+   }
+   ShopForAWhile();
+   leaveShop(r);   // Calls leaveshop for left to leave the shop and decrements variable l
+   leaveShop(l);   // Calls leaveshop for right to leave the shop and decrements variable r
+   signal(f);      // Calls signal function to update the availability of vaccancy in the shop
+
+}
+
+wait(r){
+    if(r!=0){
+      // busy waiting
+    }
+    r+=1;
+    return r;
+}
+
+LeaveShop(r){
+   r--;       //decrements the count of shoppers
+   return r;  //returns the updated count of shoppers
+}
+
+
+/* Signal function to update the shop vaccancy variable */
+
+signal(f){
+ 
+   f=True;
+   return f;
+}
